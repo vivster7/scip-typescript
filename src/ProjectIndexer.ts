@@ -133,6 +133,7 @@ export class ProjectIndexer {
       const document = new scip.scip.Document({
         relative_path: path.relative(this.options.cwd, sourceFile.fileName),
         occurrences: [],
+        text: sourceFile.getText(),
       })
       const input = new Input(sourceFile.fileName, sourceFile.getText())
       const visitor = new FileIndexer(

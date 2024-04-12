@@ -1,0 +1,12 @@
+diff --git a/src/ProjectIndexer.ts b/src/ProjectIndexer.ts
+index df823aa..a5a2235 100644
+--- a/src/ProjectIndexer.ts
++++ b/src/ProjectIndexer.ts
+@@ -133,6 +133,7 @@ export class ProjectIndexer {
+       const document = new scip.scip.Document({
+         relative_path: path.relative(this.options.cwd, sourceFile.fileName),
+         occurrences: [],
++        text: sourceFile.getText(),
+       })
+       const input = new Input(sourceFile.fileName, sourceFile.getText())
+       const visitor = new FileIndexer(
