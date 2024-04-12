@@ -154,6 +154,10 @@ export class FileIndexer {
     if (isDefinitionNode) {
       role |= scip.scip.SymbolRole.Definition
     }
+    const isImportNode = isImport(node.parent)
+    if (isImportNode) {
+      role |= scip.scip.SymbolRole.Import
+    }
     const declarations = ts.isConstructorDeclaration(node)
       ? [node]
       : isDefinitionNode
@@ -875,5 +879,14 @@ function declarationName(node: ts.Node): ts.Node | undefined {
 function isDefinition(node: ts.Node): boolean {
   return (
     declarationName(node.parent) === node || ts.isConstructorDeclaration(node)
+  )
+}
+
+function isImport(node: ts.Node): boolean {
+  return (
+    ts.isImportClause(node) ||
+    ts.isImportSpecifier(node) ||
+    ts.isImportDeclaration(node) || 
+    ts.isNamespaceImport(node)
   )
 }

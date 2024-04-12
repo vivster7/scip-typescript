@@ -1,0 +1,28 @@
+diff --git a/src/FileIndexer.ts b/src/FileIndexer.ts
+index 3b7f0ac..62a1ad8 100644
+--- a/src/FileIndexer.ts
++++ b/src/FileIndexer.ts
+@@ -154,6 +154,10 @@ export class FileIndexer {
+     if (isDefinitionNode) {
+       role |= scip.scip.SymbolRole.Definition
+     }
++    const isImportNode = isImport(node.parent)
++    if (isImportNode) {
++      role |= scip.scip.SymbolRole.Import
++    }
+     const declarations = ts.isConstructorDeclaration(node)
+       ? [node]
+       : isDefinitionNode
+@@ -877,3 +881,12 @@ function isDefinition(node: ts.Node): boolean {
+     declarationName(node.parent) === node || ts.isConstructorDeclaration(node)
+   )
+ }
++
++function isImport(node: ts.Node): boolean {
++  return (
++    ts.isImportClause(node) ||
++    ts.isImportSpecifier(node) ||
++    ts.isImportDeclaration(node) || 
++    ts.isNamespaceImport(node)
++  )
++}
